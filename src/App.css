@@ -8,7 +8,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(17, 17, 17, 0.95);
+  background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
 }
@@ -73,7 +73,7 @@
 .nav-tab.active {
   background-color: var(--surface-color);
   color: var(--text-primary);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .nav-tab.active svg {
@@ -123,8 +123,8 @@
 }
 
 .card:hover {
-  border-color: rgba(230, 32, 32, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(217, 4, 41, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 /* Specific component styles for Study Guide and Quiz */

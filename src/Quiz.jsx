@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, CheckCircle2 } from 'lucide-react';
+import { InlineMath, BlockMath } from 'react-katex';
 
 const QuizAccordion = ({ question, options, correctAnswer, explanation, index }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,22 +17,19 @@ const QuizAccordion = ({ question, options, correctAnswer, explanation, index })
       
       {isOpen && (
         <div className="accordion-content">
-          <ul className="options-list">
+          <div className="options-list">
             {options.map((opt, i) => (
-              <li key={i} style={{ 
-                borderColor: opt.trim() === correctAnswer.trim() ? 'var(--accent-color)' : 'var(--border-color)',
-                backgroundColor: opt.trim() === correctAnswer.trim() ? 'rgba(230, 32, 32, 0.05)' : 'var(--bg-color)'
-              }}>
+              <React.Fragment key={i}>
                 {opt}
-              </li>
+              </React.Fragment>
             ))}
-          </ul>
+          </div>
           
           <div className="correct-answer">
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>
               <CheckCircle2 size={18} /> Correct Answer: {correctAnswer}
             </div>
-            <p style={{ margin: 0, color: 'rgba(255,255,255,0.9)' }}>{explanation}</p>
+            <p style={{ margin: 0, color: 'var(--text-secondary)' }}>{explanation}</p>
           </div>
         </div>
       )}
@@ -42,69 +40,114 @@ const QuizAccordion = ({ question, options, correctAnswer, explanation, index })
 const Quiz = () => {
   const quizData = [
     {
-      question: "Which is not a Holling type response of predator(P) to prey(F)? a, b, h, and c are constant.",
-      options: ["a) P = aF", "b) P = aF/(1 + ahF)", "c) P = bF²/(1 + cF + bhF²)", "d) P = a/(1 + bF)"],
-      correctAnswer: "d) P = a/(1 + bF)",
+      question: <span>Which is not a Holling type response of predator(P) to prey(F)? a, b, h, and c are constant.</span>,
+      options: [
+        <span>a) <InlineMath math="P = aF" /></span>, 
+        <span>b) <InlineMath math="P = \frac{aF}{1 + ahF}" /></span>, 
+        <span>c) <InlineMath math="P = \frac{bF^2}{1 + cF + bhF^2}" /></span>, 
+        <span>d) <InlineMath math="P = \frac{a}{1 + bF}" /></span>
+      ],
+      correctAnswer: "d",
       explanation: "This is NOT a Holling type — it decreases as prey F increases, which makes no ecological sense for a predator response. Holling Type I, II, III are options a, b, c respectively."
     },
     {
-      question: "Which is not a saturation response of phytoplankton to solar radiation (I), I₀ a constant:",
-      options: ["a) I/I₀", "b) I/(I + I₀)", "c) 1 - exp(-I/I₀)", "d) tanh(-I/I₀)"],
-      correctAnswer: "d) tanh(-I/I₀)",
+      question: <span>Which is not a saturation response of phytoplankton to solar radiation (<InlineMath math="I" />), <InlineMath math="I_0" /> a constant:</span>,
+      options: [
+        <span>a) <InlineMath math="I/I_0" /></span>, 
+        <span>b) <InlineMath math="\frac{I}{I + I_0}" /></span>, 
+        <span>c) <InlineMath math="1 - \exp(-I/I_0)" /></span>, 
+        <span>d) <InlineMath math="\tanh(-I/I_0)" /></span>
+      ],
+      correctAnswer: "d",
       explanation: "The negative argument makes tanh return negative values for positive I — not a valid saturation response."
     },
     {
-      question: "Which is closest to correct Redfield ratio of carbon(C), nitrogen(N) and phosphorus(P) found in a phytoplankton?",
-      options: ["a) C/P = 100", "b) C/N = 50", "c) N/P = 40", "d) C/P = 90"],
+      question: <span>Which is closest to correct Redfield ratio of carbon(C), nitrogen(N) and phosphorus(P) found in a phytoplankton?</span>,
+      options: [
+        "a) C/P = 100", 
+        "b) C/N = 50", 
+        "c) N/P = 40", 
+        "d) C/P = 90"
+      ],
       correctAnswer: "a) C/P = 100",
       explanation: "The Redfield ratio is C:N:P = 106:16:1. So C/P = 106 ≈ 100 (closest)."
     },
     {
-      question: "Which in the following elements of life is nutrient?",
+      question: <span>Which in the following elements of life is nutrient?</span>,
       options: ["a) C", "b) H", "c) O", "d) N"],
       correctAnswer: "d) N",
       explanation: "C, H, O are readily available from CO₂ and H₂O. Nitrogen is the one that acts as a nutrient — it's a limiting factor for growth."
     },
     {
-      question: "Which molecule is used for energy production in eukaryote cell?",
-      options: ["a) H₂", "b) O₂", "c) P₄", "d) N₂"],
-      correctAnswer: "b) O₂",
+      question: <span>Which molecule is used for energy production in eukaryote cell?</span>,
+      options: [
+        <span>a) <InlineMath math="H_2" /></span>, 
+        <span>b) <InlineMath math="O_2" /></span>, 
+        <span>c) <InlineMath math="P_4" /></span>, 
+        <span>d) <InlineMath math="N_2" /></span>
+      ],
+      correctAnswer: "b",
       explanation: "Eukaryotic cells use O₂ in oxidative phosphorylation (cellular respiration) to produce ATP energy."
     },
     {
-      question: "Which compound is formed first in nitrogen fixation?",
-      options: ["a) NO₃", "b) NO₂", "c) NH₄", "d) NO"],
-      correctAnswer: "c) NH₄",
+      question: <span>Which compound is formed first in nitrogen fixation?</span>,
+      options: [
+        <span>a) <InlineMath math="NO_3^-" /></span>, 
+        <span>b) <InlineMath math="NO_2^-" /></span>, 
+        <span>c) <InlineMath math="NH_4^+" /></span>, 
+        <span>d) <InlineMath math="NO" /></span>
+      ],
+      correctAnswer: "c",
       explanation: "Nitrogen fixation: N₂ + 8H⁺ + 8e⁻ → 2NH₃ + H₂. The ammonia (NH₃) quickly becomes ammonium (NH₄⁺) in water. This is the first product."
     },
     {
-      question: "Nutrient P's origin is in which component of earth system?",
+      question: <span>Nutrient P's origin is in which component of earth system?</span>,
       options: ["a) Atmosphere", "b) Lithosphere", "c) Upper ocean water", "d) Deep ocean water"],
       correctAnswer: "b) Lithosphere",
       explanation: "Phosphorus has no atmospheric reservoir (unlike nitrogen). It originates from rocks (lithosphere) and enters the ocean through river weathering."
     },
     {
-      question: "In the following reaction A + B → C, which gives reaction rate?",
-      options: ["a) d[A]/dt", "b) d[B]/dt", "c) d[C]/dt", "d) -d[C]/dt"],
-      correctAnswer: "c) d[C]/dt",
+      question: <span>In the following reaction <InlineMath math="A + B \rightarrow C" />, which gives reaction rate?</span>,
+      options: [
+        <span>a) <InlineMath math="\frac{d[A]}{dt}" /></span>, 
+        <span>b) <InlineMath math="\frac{d[B]}{dt}" /></span>, 
+        <span>c) <InlineMath math="\frac{d[C]}{dt}" /></span>, 
+        <span>d) <InlineMath math="-\frac{d[C]}{dt}" /></span>
+      ],
+      correctAnswer: "c",
       explanation: "Reaction rate is the rate of product formation, which is d[C]/dt (positive)."
     },
     {
-      question: "In the following reaction aA + bB → cA + dD, what choice will make this reaction autocatalytic?",
-      options: ["a) a < b", "b) a < c", "c) a < d", "d) b < d"],
-      correctAnswer: "b) a < c",
+      question: <span>In the following reaction <InlineMath math="aA + bB \rightarrow cA + dD" />, what choice will make this reaction autocatalytic?</span>,
+      options: [
+        <span>a) <InlineMath math="a < b" /></span>, 
+        <span>b) <InlineMath math="a < c" /></span>, 
+        <span>c) <InlineMath math="a < d" /></span>, 
+        <span>d) <InlineMath math="b < d" /></span>
+      ],
+      correctAnswer: "b",
       explanation: "An autocatalytic reaction is one where a product catalyzes its own formation. If a < c, it means species A appears MORE on the product side than the reactant side."
     },
     {
-      question: "Following autocatalytic reaction: A + X → 2X, [A] + [X] = c — gives logistic equation for [X]. What is carrying capacity?",
-      options: ["a) [A]", "b) [X]", "c) 2[X]", "d) c"],
-      correctAnswer: "d) c",
+      question: <span>Following autocatalytic reaction: <InlineMath math="A + X \rightarrow 2X" />, <InlineMath math="[A] + [X] = c" /> — gives logistic equation for <InlineMath math="[X]" />. What is carrying capacity?</span>,
+      options: [
+        <span>a) <InlineMath math="[A]" /></span>, 
+        <span>b) <InlineMath math="[X]" /></span>, 
+        <span>c) <InlineMath math="2[X]" /></span>, 
+        <span>d) <InlineMath math="c" /></span>
+      ],
+      correctAnswer: "d",
       explanation: "Since [A] + [X] = c, we can write [A] = c - [X]. The rate equation becomes d[X]/dt = k[X](c - [X]), which is exactly the logistic equation with carrying capacity = c."
     },
     {
-      question: "In a chemical reaction aA → bB, which is correct form of equilibrium constant, K?",
-      options: ["a) K = a[A]/(b[B])", "b) K = [A]^a / [B]^b", "c) K = b[B]/(a[A])", "d) K = [B]^b / [A]^a"],
-      correctAnswer: "d) K = [B]^b / [A]^a",
+      question: <span>In a chemical reaction <InlineMath math="aA \rightarrow bB" />, which is correct form of equilibrium constant, K?</span>,
+      options: [
+        <span>a) <InlineMath math="K = \frac{a[A]}{b[B]}" /></span>, 
+        <span>b) <InlineMath math="K = \frac{[A]^a}{[B]^b}" /></span>, 
+        <span>c) <InlineMath math="K = \frac{b[B]}{a[A]}" /></span>, 
+        <span>d) <InlineMath math="K = \frac{[B]^b}{[A]^a}" /></span>
+      ],
+      correctAnswer: "d",
       explanation: "The equilibrium constant is products over reactants, each raised to the power of their stoichiometric coefficients."
     }
   ];
@@ -112,7 +155,7 @@ const Quiz = () => {
   return (
     <div className="quiz-section">
       <div className="card">
-        <h1 className="text-accent">Interactive Quiz</h1>
+        <h1 className="text-accent" style={{ fontSize: '2.5rem', fontWeight: 700 }}>Interactive Quiz</h1>
         <p className="text-secondary" style={{ fontSize: '1.1rem' }}>
           Test your knowledge on Nutrient Cycles & Ecological Stoichiometry. 
           Click on a question to reveal the options and correct answer.
@@ -120,16 +163,42 @@ const Quiz = () => {
       </div>
 
       <div className="quiz-questions animate-fade-in" style={{ animationDelay: '0.1s' }}>
-        {quizData.map((q, idx) => (
-          <QuizAccordion 
-            key={idx}
-            index={idx + 1}
-            question={q.question}
-            options={q.options}
-            correctAnswer={q.correctAnswer}
-            explanation={q.explanation}
-          />
-        ))}
+        {quizData.map((q, idx) => {
+          
+          // Helper to determine if this option is the correct one based on prefix (a, b, c, d)
+          const isCorrect = (opt) => {
+             if (typeof opt === 'string') {
+               return opt.startsWith(q.correctAnswer) || opt === q.correctAnswer;
+             }
+             if (opt.props && opt.props.children) {
+               return opt.props.children[0].startsWith(q.correctAnswer);
+             }
+             return false;
+          }
+
+          return (
+            <div key={idx} className={`accordion`}>
+              <QuizAccordion 
+                index={idx + 1}
+                question={q.question}
+                options={q.options.map((opt, i) => (
+                  <div key={i} style={{ 
+                    padding: '0.75rem',
+                    border: '1px solid',
+                    borderColor: isCorrect(opt) ? 'var(--accent-color)' : 'var(--border-color)',
+                    backgroundColor: isCorrect(opt) ? 'rgba(217, 4, 41, 0.05)' : 'var(--bg-color)',
+                    borderRadius: '6px',
+                    marginBottom: '0.5rem'
+                  }}>
+                    {opt}
+                  </div>
+                ))}
+                correctAnswer={q.correctAnswer.toUpperCase()}
+                explanation={q.explanation}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
