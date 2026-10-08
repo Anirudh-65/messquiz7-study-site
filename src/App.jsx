@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, HelpCircle, Github } from 'lucide-react';
+import { BookOpen, HelpCircle, ExternalLink } from 'lucide-react';
 import StudyGuide from './StudyGuide';
 import Quiz from './Quiz';
 import './App.css';
@@ -32,7 +32,7 @@ function App() {
             </button>
           </nav>
           <a href="https://github.com/Anirudh-65" target="_blank" rel="noopener noreferrer" className="github-link">
-            <Github size={20} />
+            <ExternalLink size={20} />
             <span>Anirudh-65</span>
           </a>
         </div>
